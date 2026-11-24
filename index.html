@@ -693,7 +693,7 @@ form.sheet-body > .sheet-actions{
     <div class="wrap">
       <div id="bodySum"></div>
 
-      <div class="chartcard">
+      <div class="chartcard" id="bodyChartCard">
         <div class="charthead">
           <h2>일자별 추이</h2>
           <p id="bodyChartSel">–</p>
@@ -703,7 +703,7 @@ form.sheet-body > .sheet-actions{
         <p class="chartstat" id="bodyChartStat"></p>
       </div>
 
-      <div class="painbar">
+      <div class="painbar" id="bodyListHead">
         <div>
           <h2>최근 기록</h2>
           <p id="bodyCount">기록 0건</p>
@@ -2083,6 +2083,9 @@ form.sheet-body > .sheet-actions{
   }
 
   function renderBody() {
+    var has = store.body.length > 0;
+    $('#bodyChartCard').style.display = has ? '' : 'none';
+    $('#bodyListHead').style.display = has ? '' : 'none';
     renderBodySummary();
     renderBodyChart();
     renderBodyList();
