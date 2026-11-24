@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f5f8">
-<meta name="description" content="운동 일지 — 1주차 주간 운동 계획, 세트 체크, 휴식·동작 타이머, 통증 일지">
+<meta name="description" content="운동 일지 — 1주차 주간 운동 계획, 세트 체크, 휴식·동작 타이머, 신체·인바디 기록, 통증 일지">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -51,8 +51,8 @@ body{
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 body.lock{overflow:hidden}
-body.tab-pain{padding-bottom:calc(62px + var(--safe-b) + 18px)}
-body.tab-pain .dock{display:none}
+body.tab-pain,body.tab-body{padding-bottom:calc(62px + var(--safe-b) + 18px)}
+body.tab-pain .dock,body.tab-body .dock{display:none}
 button{font-family:inherit;font-size:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
 input,textarea,select{font-family:inherit;font-size:16px;color:inherit}
 h1,h2,h3,h4,p{margin:0}
@@ -497,6 +497,68 @@ form.sheet-body > .sheet-actions{
 .guide-tips{padding:12px 0 0}
 .guide-tips li{font-size:12.5px;color:var(--txt2);line-height:1.55;margin-bottom:4px}
 
+/* ---------- 신체 · 인바디 ---------- */
+.bmc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:15px;box-shadow:var(--shadow);margin-bottom:12px}
+.bmc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.bmc-date{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:0}
+.bmc-w{display:flex;align-items:baseline;gap:5px;margin-top:3px;flex-wrap:wrap}
+.bmc-w b{font-size:31px;font-weight:800;letter-spacing:-.035em;line-height:1.05;font-variant-numeric:tabular-nums}
+.bmc-w span{font-size:13px;font-weight:700;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;padding:5px 10px;border-radius:99px;letter-spacing:0;white-space:nowrap}
+.badge.b1{background:var(--blue-soft);color:var(--blue)}
+.badge.b2{background:var(--accent-soft);color:var(--accent2)}
+.badge.b3{background:#fdf3d7;color:#9a6b08}
+.badge.b4{background:var(--danger-soft);color:var(--danger)}
+[data-theme="dark"] .badge.b3{background:#33290d;color:#f2c75c}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+.btile{background:var(--card2);border:1px solid var(--line2);border-radius:13px;padding:9px 11px;min-width:0}
+.btile .bl{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btile .bv{font-size:16.5px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:2px;white-space:nowrap}
+.btile .bv small{font-size:10.5px;font-weight:700;color:var(--muted);margin-left:2px}
+.btile .bs{font-size:10.5px;font-weight:700;color:var(--muted);margin-top:2px}
+.dlt{font-size:10.5px;font-weight:800;margin-left:4px;font-variant-numeric:tabular-nums;letter-spacing:0}
+.dlt.g{color:var(--accent2)}
+.dlt.r{color:var(--danger)}
+.dlt.n{color:var(--muted)}
+.bmc-foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:11px;font-size:11.5px;color:var(--muted);font-weight:600}
+.bmc-foot b{color:var(--txt2);font-weight:800;font-variant-numeric:tabular-nums}
+.chartcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 12px 10px;box-shadow:var(--shadow);margin-bottom:12px}
+.charthead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px}
+.charthead h2{font-size:15px;font-weight:800}
+.charthead p{font-size:11.5px;font-weight:800;color:var(--accent2);font-variant-numeric:tabular-nums;letter-spacing:0}
+.mchips{display:flex;gap:6px;overflow-x:auto;padding:10px 2px 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.mchips::-webkit-scrollbar{display:none}
+.mchip{flex:0 0 auto;min-height:34px;padding:0 12px;border-radius:99px;border:1.5px solid var(--line);background:var(--card2);font-size:12px;font-weight:800;color:var(--txt2);transition:background .15s,color .15s}
+.mchip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.cwrap{width:100%}
+.cwrap svg{width:100%;height:auto;display:block}
+.cwrap .grid{stroke:var(--line);stroke-width:1}
+.cwrap .guidel{stroke:var(--accent-line);stroke-width:1.5;stroke-dasharray:4 4}
+.cwrap .area{fill:var(--accent);opacity:.14}
+.cwrap .line{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.cwrap .pt{fill:var(--card);stroke:var(--accent);stroke-width:2.4}
+.cwrap .pt.on{stroke-width:3.2}
+.cwrap .halo{fill:var(--accent-soft)}
+.cwrap .lbl{fill:var(--muted);font-size:9.5px;font-weight:700;font-family:var(--font)}
+.cwrap .val{fill:var(--txt2);font-size:9.5px;font-weight:800;font-family:var(--font)}
+.cpt{cursor:pointer}
+.chartstat{font-size:11.5px;color:var(--muted);font-weight:700;text-align:center;padding:6px 2px 2px;font-variant-numeric:tabular-nums;line-height:1.5}
+.chartempty{text-align:center;padding:18px 10px 22px;font-size:12.5px;color:var(--muted);line-height:1.55}
+.brow{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px;box-shadow:var(--shadow-sm)}
+.brow .bd{flex:0 0 auto;width:44px;text-align:center}
+.brow .bd b{display:block;font-size:15px;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
+.brow .bd span{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:0}
+.brow .bm{flex:1;min-width:0}
+.brow .bm .bt{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.brow .bm p{font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.brow .acts{display:flex;gap:2px;flex:0 0 auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two > .fl{min-width:0}
+.bprev{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:14px;padding:11px 13px;margin:0 0 14px}
+.bprev .pt{font-size:10.5px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:0}
+.bprev .prow{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:12.5px;padding:2.5px 0;color:var(--txt2);font-weight:600}
+.bprev .prow b{font-weight:800;font-variant-numeric:tabular-nums;color:var(--txt)}
+
 /* ---------- toast ---------- */
 .toast{
   position:fixed;left:50%;bottom:calc(150px + var(--safe-b));transform:translate(-50%,14px);
@@ -625,6 +687,36 @@ form.sheet-body > .sheet-actions{
       <div id="pList"></div>
     </div>
   </section>
+
+  <!-- ================= 신체 · 인바디 ================= -->
+  <section class="view" id="viewBody">
+    <div class="wrap">
+      <div id="bodySum"></div>
+
+      <div class="chartcard">
+        <div class="charthead">
+          <h2>일자별 추이</h2>
+          <p id="bodyChartSel">–</p>
+        </div>
+        <div class="mchips" id="bodyChips"></div>
+        <div class="cwrap" id="bodyChart"></div>
+        <p class="chartstat" id="bodyChartStat"></p>
+      </div>
+
+      <div class="painbar">
+        <div>
+          <h2>최근 기록</h2>
+          <p id="bodyCount">기록 0건</p>
+        </div>
+        <button class="btn primary" id="bAdd" style="min-height:44px;padding:0 16px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          기록
+        </button>
+      </div>
+
+      <div id="bodyList"></div>
+    </div>
+  </section>
 </main>
 
 <!-- ================= 휴식 타이머 ================= -->
@@ -691,6 +783,10 @@ form.sheet-body > .sheet-actions{
     <button class="tab on" data-tab="workout">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>
       <span>운동</span>
+    </button>
+    <button class="tab" data-tab="body">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.6" r="2.4"/><path d="M12 7.4v6.2m0 0-3.4 7M12 13.6l3.4 7M6.4 10.4 12 9.2l5.6 1.2"/></svg>
+      <span>신체</span>
     </button>
     <button class="tab" data-tab="pain">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 3 10 2.5-6H21"/></svg>
@@ -797,6 +893,66 @@ form.sheet-body > .sheet-actions{
   </form>
 </div>
 
+<!-- ================= 신체 기록 (인바디) ================= -->
+<div class="sheet" id="bodySheet" role="dialog" aria-modal="true" aria-label="신체 기록">
+  <div class="grab"></div>
+  <div class="sheet-head">
+    <div><h2 id="bodySheetTitle">신체 기록</h2><p>몸무게만 넣어도 저장되고, 인바디 수치를 함께 넣으면 계산돼요</p></div>
+    <button class="close" data-close="bodySheet" aria-label="닫기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <form class="sheet-body" id="bodyForm" novalidate>
+    <label class="fl">
+      <span class="lb">날짜</span>
+      <input type="date" id="bfDate">
+    </label>
+    <div class="two">
+      <label class="fl">
+        <span class="lb">키 <span class="hint">cm</span></span>
+        <input inputmode="decimal" id="bfHeight" placeholder="188" autocomplete="off">
+      </label>
+      <label class="fl">
+        <span class="lb">몸무게 <span class="hint">kg · 필수</span></span>
+        <input inputmode="decimal" id="bfWeight" placeholder="예: 78.4" autocomplete="off">
+      </label>
+    </div>
+    <div class="two">
+      <label class="fl">
+        <span class="lb">골격근량 <span class="hint">kg</span></span>
+        <input inputmode="decimal" id="bfMuscle" placeholder="예: 34.2" autocomplete="off">
+      </label>
+      <label class="fl">
+        <span class="lb">내장지방 <span class="hint">레벨</span></span>
+        <input inputmode="numeric" id="bfVisceral" placeholder="예: 8" autocomplete="off">
+      </label>
+    </div>
+    <div class="two">
+      <label class="fl">
+        <span class="lb">체지방률 <span class="hint">%</span></span>
+        <input inputmode="decimal" id="bfFatPct" placeholder="예: 18.5" autocomplete="off">
+      </label>
+      <label class="fl">
+        <span class="lb">체지방량 <span class="hint">kg</span></span>
+        <input inputmode="decimal" id="bfFatMass" placeholder="자동 계산" autocomplete="off">
+      </label>
+    </div>
+    <label class="fl">
+      <span class="lb">기초대사량 <span class="hint">kcal · 비우면 추정치</span></span>
+      <input inputmode="numeric" id="bfBmr" placeholder="예: 1690" autocomplete="off">
+    </label>
+    <div class="bprev" id="bfPreview"></div>
+    <label class="fl">
+      <span class="lb">메모 <span class="hint">선택</span></span>
+      <textarea id="bfMemo" rows="2" placeholder="예: 공복 측정, 운동 전, 컨디션 좋음"></textarea>
+    </label>
+    <div class="sheet-actions">
+      <button type="button" class="btn" data-close="bodySheet">취소</button>
+      <button type="submit" class="btn primary" id="bfSave">저장</button>
+    </div>
+  </form>
+</div>
+
 <!-- ================= 운동 추가 ================= -->
 <div class="sheet" id="customSheet" role="dialog" aria-modal="true" aria-label="운동 추가">
   <div class="grab"></div>
@@ -863,7 +1019,7 @@ form.sheet-body > .sheet-actions{
       <label class="sw"><input type="checkbox" id="autoRestSw"><i></i></label>
     </div>
     <div class="row">
-      <div><div class="rt">데이터 백업</div><div class="rs">운동·통증 기록을 JSON 파일로 보관</div></div>
+      <div><div class="rt">데이터 백업</div><div class="rs">운동·통증·신체 기록을 JSON 파일로 보관</div></div>
     </div>
     <div style="display:flex;gap:8px;padding:10px 0 4px">
       <button class="btn" id="exportBtn" style="flex:1">
@@ -877,7 +1033,7 @@ form.sheet-body > .sheet-actions{
       <input type="file" id="importFile" accept="application/json,.json" hidden>
     </div>
     <div class="row" style="border-top:1px solid var(--line2)">
-      <div><div class="rt" style="color:var(--danger)">전체 기록 삭제</div><div class="rs">운동 체크·메모·통증 기록이 모두 지워집니다</div></div>
+      <div><div class="rt" style="color:var(--danger)">전체 기록 삭제</div><div class="rs">운동 체크·메모·통증·신체 기록이 모두 지워집니다</div></div>
       <button class="tiny danger" id="wipeBtn">삭제</button>
     </div>
     <p style="font-size:11.5px;color:var(--muted);line-height:1.6;padding:12px 0 6px">
@@ -1081,7 +1237,7 @@ form.sheet-body > .sheet-actions{
 
   /* ================= 저장소 ================= */
   var KEY = 'workoutLog.v1';
-  function defaults() { return { v: 1, logs: {}, pain: [], settings: { theme: 'system', autoRest: true } }; }
+  function defaults() { return { v: 1, logs: {}, pain: [], body: [], settings: { theme: 'system', autoRest: true, bodyHeight: 188 } }; }
   var store = loadStore();
   var memoryOnly = false;
 
@@ -1091,6 +1247,7 @@ form.sheet-body > .sheet-actions{
     var src = o.data && typeof o.data === 'object' ? o.data : o;
     if (src.logs && typeof src.logs === 'object') d.logs = src.logs;
     if (Array.isArray(src.pain)) d.pain = src.pain;
+    if (Array.isArray(src.body)) d.body = src.body.filter(function (e) { return e && typeof e === 'object' && e.date; });
     if (src.settings && typeof src.settings === 'object') d.settings = Object.assign(d.settings, src.settings);
     return d;
   }
@@ -1726,6 +1883,327 @@ form.sheet-body > .sheet-actions{
     renderPain();
   }
 
+  /* ================= 신체 · 인바디 ================= */
+  var BODY_AGE = 44; // 기초대사량 추정 기준 나이(참고치)
+  var BODY_METRICS = [
+    { key: 'weight', label: '몸무게', unit: 'kg' },
+    { key: 'bmi', label: 'BMI', unit: '' },
+    { key: 'muscle', label: '골격근량', unit: 'kg' },
+    { key: 'fatPct', label: '체지방률', unit: '%' },
+    { key: 'fatMass', label: '체지방량', unit: 'kg' }
+  ];
+  var bodyMetric = 'weight';
+  var bodySelIdx = -1;
+  var editingBodyId = null;
+
+  function numOrNull(v) {
+    if (v === null || v === undefined) return null;
+    var s = String(v).replace(/,/g, '.').trim();
+    if (!s) return null;
+    var n = Number(s);
+    return isFinite(n) ? n : null;
+  }
+  function f1(v) {
+    if (v === null || v === undefined || !isFinite(v)) return '–';
+    return (Math.round(v * 10) / 10).toFixed(1);
+  }
+  function bodyStoreSorted() {
+    return store.body.slice().sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+  }
+  function bodyCalc(e) {
+    var h = numOrNull(e.height), w = numOrNull(e.weight), mu = numOrNull(e.muscle);
+    var fp = numOrNull(e.fatPct), fm = numOrNull(e.fatMass);
+    if (w && fp != null) fm = w * fp / 100;
+    else if (w && fm != null) fp = fm / w * 100;
+    var lean = (w != null && fm != null) ? Math.max(0, w - fm) : null;
+    var bmr = numOrNull(e.bmr), est = false;
+    if (bmr == null) {
+      if (lean) { bmr = 370 + 21.6 * lean; est = true; }
+      else if (w && h) { bmr = 10 * w + 6.25 * h - 5 * BODY_AGE + 5; est = true; }
+    }
+    return {
+      id: e.id, date: e.date, h: h, w: w, weight: w, muscle: mu,
+      fatPct: fp, fatMass: fm, lean: lean, bmr: bmr, bmrEst: est,
+      bmi: (h && w) ? w / Math.pow(h / 100, 2) : null,
+      musclePct: (w && mu) ? mu / w * 100 : null,
+      visceral: numOrNull(e.visceral), memo: e.memo || ''
+    };
+  }
+  function bodyList() { return bodyStoreSorted().map(bodyCalc); }
+  function bodyLatest() { var l = bodyStoreSorted(); return l.length ? bodyCalc(l[l.length - 1]) : null; }
+  function bodyPrev(date) {
+    var l = bodyStoreSorted().filter(function (e) { return e.date < date; });
+    return l.length ? bodyCalc(l[l.length - 1]) : null;
+  }
+  function bodyById(id) { return store.body.filter(function (e) { return e.id === id; })[0] || null; }
+  function bmiCat(b) {
+    if (b == null || !isFinite(b)) return null;
+    if (b < 18.5) return { label: '저체중', cls: 'b1' };
+    if (b < 23) return { label: '정상', cls: 'b2' };
+    if (b < 25) return { label: '비만전단계', cls: 'b3' };
+    return { label: '비만', cls: 'b4' };
+  }
+  function deltaHTML(cur, prev, unit, betterDown) {
+    if (cur == null || prev == null || !isFinite(cur) || !isFinite(prev)) return '';
+    var d = cur - prev;
+    if (Math.abs(d) < 0.049) return '<span class="dlt n">–</span>';
+    var up = d > 0, cls = 'n';
+    if (betterDown === true) cls = up ? 'r' : 'g';
+    else if (betterDown === false) cls = up ? 'g' : 'r';
+    return '<span class="dlt ' + cls + '">' + (up ? '▲' : '▼') + ' ' + f1(Math.abs(d)) + (unit || '') + '</span>';
+  }
+  function btile(label, value, unit, delta, sub) {
+    return '<div class="btile"><div class="bl">' + label + '</div><div class="bv">' + value +
+      (unit ? '<small>' + unit + '</small>' : '') + (delta || '') + '</div>' +
+      (sub ? '<div class="bs">' + sub + '</div>' : '') + '</div>';
+  }
+
+  function renderBodySummary() {
+    var host = $('#bodySum');
+    var c = bodyLatest();
+    if (!c) {
+      host.innerHTML = '<div class="bmc"><div class="empty" style="border:0;background:transparent;padding:8px 4px 2px">' +
+        '<div class="em">⚖️</div><h3>아직 신체 기록이 없어요</h3>' +
+        '<p>키·몸무게만 넣어도 BMI가 계산되고,<br>인바디 수치를 함께 넣으면 그래프로 보여요.</p>' +
+        '<button class="btn primary" data-body-add style="margin-top:14px">첫 기록 남기기</button></div></div>';
+      return;
+    }
+    var p = bodyPrev(c.date), d = parseISO(c.date), cat = bmiCat(c.bmi);
+    var html = '<div class="bmc"><div class="bmc-head"><div>' +
+      '<div class="bmc-date">최신 기록 · ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + WD[d.getDay()] + ')' + (c.date === TODAY ? ' · 오늘' : '') + '</div>' +
+      '<div class="bmc-w"><b>' + f1(c.w) + '</b><span>kg</span>' + deltaHTML(c.w, p && p.w, 'kg', true) + '</div>' +
+      '</div><div>' + (cat ? '<span class="badge ' + cat.cls + '">' + cat.label + '</span>' : '') + '</div></div>' +
+      '<div class="bgrid">' +
+      btile('BMI', f1(c.bmi), '', deltaHTML(c.bmi, p && p.bmi, ''), cat ? cat.label : '') +
+      btile('골격근량', f1(c.muscle), 'kg', deltaHTML(c.muscle, p && p.muscle, 'kg', false), c.musclePct != null ? '몸무게의 ' + f1(c.musclePct) + '%' : '') +
+      btile('체지방률', f1(c.fatPct), '%', deltaHTML(c.fatPct, p && p.fatPct, '%', true), '') +
+      btile('체지방량', f1(c.fatMass), 'kg', deltaHTML(c.fatMass, p && p.fatMass, 'kg', true), '') +
+      btile('제지방량', f1(c.lean), 'kg', deltaHTML(c.lean, p && p.lean, 'kg', false), '') +
+      btile('기초대사량', c.bmr == null ? '–' : String(Math.round(c.bmr)), 'kcal', '', c.bmrEst ? '추정치' : '직접 입력') +
+      '</div>';
+    var foot = [];
+    if (c.visceral != null) foot.push('내장지방 레벨 <b>' + Math.round(c.visceral) + '</b>');
+    if (c.h != null) foot.push('키 <b>' + f1(c.h) + '</b> cm');
+    if (foot.length) html += '<div class="bmc-foot">' + foot.join('<span style="opacity:.45;margin:0 2px">·</span>') + '</div>';
+    if (c.memo) html += '<div class="bmc-foot" style="display:block;margin-top:5px">' + esc(c.memo) + '</div>';
+    html += '<div style="display:flex;gap:8px;margin-top:12px">' +
+      '<button class="btn" data-bedit="' + c.id + '" style="flex:1;min-height:42px">수정</button>' +
+      '<button class="btn primary" data-body-add style="flex:1;min-height:42px">기록 추가</button></div>';
+    html += '</div>';
+    host.innerHTML = html;
+  }
+
+  function renderBodyChart() {
+    var metric = BODY_METRICS[0];
+    BODY_METRICS.forEach(function (m) { if (m.key === bodyMetric) metric = m; });
+    bodyMetric = metric.key;
+    $('#bodyChips').innerHTML = BODY_METRICS.map(function (m) {
+      return '<button type="button" class="mchip' + (m.key === bodyMetric ? ' on' : '') + '" data-metric="' + m.key + '">' + m.label + '</button>';
+    }).join('');
+    var pts = [];
+    bodyList().forEach(function (c) {
+      var v = c[bodyMetric];
+      if (v != null && isFinite(v)) pts.push({ date: c.date, v: v });
+    });
+    var host = $('#bodyChart');
+    if (!pts.length) {
+      host.innerHTML = '<div class="chartempty">' + metric.label + ' 기록이 아직 없어요.<br>기록을 남기면 일자별로 이어서 그려져요.</div>';
+      $('#bodyChartSel').textContent = '–';
+      $('#bodyChartStat').textContent = '';
+      return;
+    }
+    var n = pts.length;
+    var sel = (bodySelIdx >= 0 && bodySelIdx < n) ? bodySelIdx : n - 1;
+    var W = 340, H = 176, PL = 42, PR = 14, PT = 22, PB = 28;
+    var iw = W - PL - PR, ih = H - PT - PB;
+    var vs = pts.map(function (p) { return p.v; });
+    var vmin = Math.min.apply(null, vs), vmax = Math.max.apply(null, vs);
+    if (vmax - vmin < 0.8) { var mid = (vmax + vmin) / 2; vmin = mid - 0.4; vmax = mid + 0.4; }
+    var padv = (vmax - vmin) * 0.22;
+    vmin -= padv; vmax += padv;
+    var X = function (i) { return n === 1 ? PL + iw / 2 : PL + iw * i / (n - 1); };
+    var Y = function (v) { return PT + ih - (v - vmin) / (vmax - vmin) * ih; };
+    var s = '';
+    for (var g = 0; g <= 3; g++) {
+      var gv = vmin + (vmax - vmin) * g / 3, gy = Y(gv);
+      s += '<line class="grid" x1="' + PL + '" y1="' + gy.toFixed(1) + '" x2="' + (W - PR) + '" y2="' + gy.toFixed(1) + '"' + (g ? ' stroke-dasharray="3 4"' : '') + '/>';
+      s += '<text class="lbl" x="' + (PL - 8) + '" y="' + (gy + 3.4).toFixed(1) + '" text-anchor="end">' + f1(gv) + '</text>';
+    }
+    var line = '';
+    pts.forEach(function (p, i) { line += (i ? ' L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.v).toFixed(1); });
+    if (n > 1) {
+      s += '<path class="area" d="' + line + ' L' + X(n - 1).toFixed(1) + ' ' + (PT + ih) + ' L' + X(0).toFixed(1) + ' ' + (PT + ih) + ' Z"/>';
+    }
+    s += '<line class="guidel" x1="' + X(sel).toFixed(1) + '" y1="' + PT + '" x2="' + X(sel).toFixed(1) + '" y2="' + (PT + ih) + '"/>';
+    s += '<path class="line" d="' + line + '"/>';
+    pts.forEach(function (p, i) {
+      var x = X(i).toFixed(1), y = Y(p.v).toFixed(1), on = i === sel;
+      s += '<g class="cpt" data-i="' + i + '"><circle cx="' + x + '" cy="' + y + '" r="15" fill="transparent" stroke="none"/>';
+      if (on) s += '<circle class="halo" cx="' + x + '" cy="' + y + '" r="8.5"/>';
+      s += '<circle class="pt' + (on ? ' on' : '') + '" cx="' + x + '" cy="' + y + '" r="' + (on ? 5.2 : 3.8) + '"/>';
+      if (n <= 8) s += '<text class="val" x="' + x + '" y="' + (Y(p.v) - 10).toFixed(1) + '" text-anchor="middle">' + f1(p.v) + '</text>';
+      s += '</g>';
+    });
+    var step = n <= 5 ? 1 : Math.ceil((n - 1) / 4);
+    for (var k = 0; k < n; k++) {
+      if (k !== 0 && k !== n - 1 && (k % step !== 0 || (n - 1 - k) < step * 0.6)) continue;
+      var pd = parseISO(pts[k].date);
+      s += '<text class="lbl" x="' + X(k).toFixed(1) + '" y="' + (PT + ih + 17) + '" text-anchor="middle">' + (pd.getMonth() + 1) + '/' + pd.getDate() + '</text>';
+    }
+    host.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + metric.label + ' 일자별 추이 그래프">' + s + '</svg>';
+    var sp = pts[sel], sd = parseISO(sp.date);
+    $('#bodyChartSel').textContent = (sd.getMonth() + 1) + '/' + sd.getDate() + ' (' + WD[sd.getDay()] + ') · ' + f1(sp.v) + metric.unit;
+    var lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs);
+    $('#bodyChartStat').textContent = '최근 ' + f1(pts[n - 1].v) + metric.unit + ' · 최저 ' + f1(lo) + metric.unit + ' · 최고 ' + f1(hi) + metric.unit + ' · ' + n + '회';
+  }
+
+  function renderBodyList() {
+    var list = bodyList().slice().reverse();
+    $('#bodyCount').textContent = list.length ? '전체 ' + list.length + '건' : '기록 0건';
+    if (!list.length) {
+      $('#bodyList').innerHTML = '<div class="empty"><div class="em">⚖️</div><h3>아직 기록이 없어요</h3>' +
+        '<p>몸무게만 적어도 되고, 인바디 수치를 같이 넣으면<br>BMI·체지방률·골격근 비율까지 자동으로 계산해요.</p></div>';
+      return;
+    }
+    $('#bodyList').innerHTML = list.map(function (c) {
+      var d = parseISO(c.date), cat = bmiCat(c.bmi);
+      var sub = [];
+      if (c.muscle != null) sub.push('골격근 ' + f1(c.muscle) + 'kg');
+      if (c.fatPct != null) sub.push('체지방 ' + f1(c.fatPct) + '%' + (c.fatMass != null ? ' (' + f1(c.fatMass) + 'kg)' : ''));
+      if (c.visceral != null) sub.push('내장지방 ' + Math.round(c.visceral));
+      if (!sub.length && c.memo) sub.push(c.memo);
+      return '<div class="brow">' +
+        '<div class="bd"><b>' + d.getDate() + '</b><span>' + (d.getMonth() + 1) + '월 ' + WD[d.getDay()] + '</span></div>' +
+        '<div class="bm"><div class="bt">' + f1(c.w) + ' kg' +
+        (cat ? ' <span class="badge ' + cat.cls + '" style="font-size:10px;padding:2px 7px">BMI ' + f1(c.bmi) + ' ' + cat.label + '</span>' : '') +
+        '</div>' + (sub.length ? '<p>' + esc(sub.join(' · ')) + '</p>' : '') + '</div>' +
+        '<div class="acts"><button class="tiny" data-bedit="' + c.id + '">수정</button>' +
+        '<button class="tiny danger" data-bdel="' + c.id + '">삭제</button></div></div>';
+    }).join('');
+  }
+
+  function renderBody() {
+    renderBodySummary();
+    renderBodyChart();
+    renderBodyList();
+    if (document.body.classList.contains('tab-body')) {
+      $('#appSub').textContent = '신체 · 인바디 · 기록 ' + store.body.length + '건';
+    }
+  }
+
+  function renderBodyPreview() {
+    var c = bodyCalc({
+      height: $('#bfHeight').value, weight: $('#bfWeight').value, muscle: $('#bfMuscle').value,
+      fatPct: $('#bfFatPct').value, fatMass: $('#bfFatMass').value,
+      visceral: $('#bfVisceral').value, bmr: $('#bfBmr').value
+    });
+    var cat = bmiCat(c.bmi);
+    var rows = [
+      ['BMI', c.bmi == null ? '–' : f1(c.bmi) + (cat ? ' · ' + cat.label : '')],
+      ['체지방량', c.fatMass == null ? '–' : f1(c.fatMass) + ' kg'],
+      ['체지방률', c.fatPct == null ? '–' : f1(c.fatPct) + ' %'],
+      ['제지방량', c.lean == null ? '–' : f1(c.lean) + ' kg'],
+      ['골격근 비율', c.musclePct == null ? '–' : f1(c.musclePct) + ' %'],
+      ['기초대사량', c.bmr == null ? '–' : Math.round(c.bmr) + ' kcal' + (c.bmrEst ? ' (추정)' : '')]
+    ];
+    $('#bfPreview').innerHTML = '<div class="pt">자동 계산</div>' + rows.map(function (r) {
+      return '<div class="prow"><span>' + r[0] + '</span><b>' + r[1] + '</b></div>';
+    }).join('');
+  }
+
+  function syncFat(src) {
+    var w = numOrNull($('#bfWeight').value);
+    if (!w) return;
+    if (src === 'pct' || src === 'weight') {
+      var fp = numOrNull($('#bfFatPct').value);
+      if (fp != null) $('#bfFatMass').value = (w * fp / 100).toFixed(1);
+    }
+    if (src === 'mass' || (src === 'weight' && numOrNull($('#bfFatPct').value) == null)) {
+      var fm = numOrNull($('#bfFatMass').value);
+      if (fm != null) $('#bfFatPct').value = (fm / w * 100).toFixed(1);
+    }
+  }
+
+  function openBodyForm(id) {
+    editingBodyId = id || null;
+    var e = id ? bodyById(id) : null;
+    $('#bodySheetTitle').textContent = id ? '신체 기록 수정' : '신체 기록';
+    $('#bfSave').textContent = id ? '수정 저장' : '저장';
+    $('#bfDate').value = e ? e.date : TODAY;
+    $('#bfHeight').value = (e && e.height != null) ? e.height : (store.settings.bodyHeight || 188);
+    $('#bfWeight').value = (e && e.weight != null) ? e.weight : '';
+    $('#bfMuscle').value = (e && e.muscle != null) ? e.muscle : '';
+    $('#bfFatPct').value = (e && e.fatPct != null) ? e.fatPct : '';
+    $('#bfFatMass').value = (e && e.fatMass != null) ? e.fatMass : '';
+    $('#bfVisceral').value = (e && e.visceral != null) ? e.visceral : '';
+    $('#bfBmr').value = (e && e.bmr != null) ? e.bmr : '';
+    $('#bfMemo').value = e ? (e.memo || '') : '';
+    renderBodyPreview();
+    openSheet('bodySheet');
+  }
+
+  function saveBody(ev) {
+    ev.preventDefault();
+    var w = numOrNull($('#bfWeight').value);
+    if (!(w > 0)) { toast('몸무게를 입력해 주세요'); $('#bfWeight').focus(); return; }
+    var h = numOrNull($('#bfHeight').value) || store.settings.bodyHeight || 188;
+    var date = $('#bfDate').value || TODAY;
+    var rec = {
+      date: date,
+      height: h,
+      weight: w,
+      muscle: numOrNull($('#bfMuscle').value),
+      fatPct: numOrNull($('#bfFatPct').value),
+      fatMass: numOrNull($('#bfFatMass').value),
+      visceral: numOrNull($('#bfVisceral').value),
+      bmr: numOrNull($('#bfBmr').value),
+      memo: $('#bfMemo').value.trim(),
+      updatedAt: Date.now()
+    };
+    var existing = store.body.filter(function (e) { return e.date === date; })[0] || null;
+    var merged = false;
+    if (editingBodyId) {
+      var cur = bodyById(editingBodyId);
+      if (cur && existing && existing.id !== editingBodyId) {
+        Object.assign(existing, rec);
+        store.body = store.body.filter(function (e) { return e.id !== editingBodyId; });
+        merged = true;
+      } else if (cur) {
+        Object.assign(cur, rec);
+      } else if (existing) {
+        Object.assign(existing, rec);
+        merged = true;
+      } else {
+        rec.id = 'b' + Date.now();
+        store.body.push(rec);
+      }
+    } else if (existing) {
+      Object.assign(existing, rec);
+      merged = true;
+    } else {
+      rec.id = 'b' + Date.now();
+      store.body.push(rec);
+    }
+    store.settings.bodyHeight = h;
+    save();
+    closeSheet('bodySheet');
+    renderBody();
+    if (editingBodyId) toast(merged ? '같은 날짜 기록으로 합쳤어요' : '기록을 수정했어요');
+    else toast(merged ? '같은 날짜 기록을 업데이트했어요' : '신체 기록을 저장했어요');
+  }
+
+  function delBody(id) {
+    var e = bodyById(id);
+    if (!e) return;
+    var d = parseISO(e.date);
+    askConfirm('이 기록을 지울까요?', (d.getMonth() + 1) + '월 ' + d.getDate() + '일 신체 기록(' + f1(e.weight) + 'kg)을 삭제합니다. 되돌릴 수 없어요.', '삭제', function () {
+      store.body = store.body.filter(function (x) { return x.id !== id; });
+      save();
+      renderBody();
+      toast('기록을 지웠어요');
+    });
+  }
+
   /* ================= 백업 ================= */
   function exportJSON() {
     var payload = { app: 'workout-log', version: 1, exportedAt: new Date().toISOString(), data: store };
@@ -1752,9 +2230,9 @@ form.sheet-body > .sheet-actions{
       try { parsed = JSON.parse(String(reader.result)); }
       catch (e) { toast('JSON 파일을 읽을 수 없어요'); return; }
       var next = normalize(parsed);
-      var logCount = Object.keys(next.logs).length, painCount = next.pain.length;
-      if (!logCount && !painCount) { toast('불러올 기록이 없어요'); return; }
-      askConfirm('불러온 기록으로 바꿀까요?', '운동 기록 ' + logCount + '일 · 통증 기록 ' + painCount + '건을 불러옵니다. 지금 기록은 이 파일의 내용으로 바뀌어요.', '불러오기', function () {
+      var logCount = Object.keys(next.logs).length, painCount = next.pain.length, bodyCount = next.body.length;
+      if (!logCount && !painCount && !bodyCount) { toast('불러올 기록이 없어요'); return; }
+      askConfirm('불러온 기록으로 바꿀까요?', '운동 기록 ' + logCount + '일 · 통증 기록 ' + painCount + '건 · 신체 기록 ' + bodyCount + '건을 불러옵니다. 지금 기록은 이 파일의 내용으로 바뀌어요.', '불러오기', function () {
         store = next;
         save();
         applyTheme();
@@ -1762,8 +2240,10 @@ form.sheet-body > .sheet-actions{
         stripStart = mondayOf(parseISO(selDate));
         pDate = selDate;
         pMonth = new Date(parseISO(pDate).getFullYear(), parseISO(pDate).getMonth(), 1);
+        bodySelIdx = -1;
         renderWorkout();
         renderPain();
+        renderBody();
         toast('기록을 불러왔어요');
       });
     };
@@ -1799,8 +2279,10 @@ form.sheet-body > .sheet-actions{
       $$('.tab').forEach(function (x) { x.classList.toggle('on', x === t); });
       $$('.view').forEach(function (v) { v.classList.remove('on'); });
       document.body.classList.toggle('tab-pain', name === 'pain');
-      $('#view' + (name === 'pain' ? 'Pain' : 'Workout')).classList.add('on');
+      document.body.classList.toggle('tab-body', name === 'body');
+      $('#view' + (name === 'pain' ? 'Pain' : (name === 'body' ? 'Body' : 'Workout'))).classList.add('on');
       if (name === 'pain') renderPain();
+      else if (name === 'body') renderBody();
       else updateWorkoutSub();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -2095,6 +2577,32 @@ form.sheet-body > .sheet-actions{
   });
   $('#painForm').addEventListener('submit', savePain);
 
+  // 신체 · 인바디
+  $('#viewBody').addEventListener('click', function (e) {
+    if (e.target.closest('[data-body-add]')) { openBodyForm(null); return; }
+    var ed = e.target.closest('[data-bedit]');
+    if (ed) { openBodyForm(ed.dataset.bedit); return; }
+    var dl = e.target.closest('[data-bdel]');
+    if (dl) { delBody(dl.dataset.bdel); return; }
+    var chip = e.target.closest('[data-metric]');
+    if (chip) { bodyMetric = chip.dataset.metric; bodySelIdx = -1; renderBodyChart(); return; }
+    var pt = e.target.closest('[data-i]');
+    if (pt) {
+      var idx = Number(pt.dataset.i);
+      if (!isNaN(idx)) { bodySelIdx = idx; renderBodyChart(); }
+    }
+  });
+  $('#bAdd').addEventListener('click', function () { openBodyForm(null); });
+  ['bfHeight', 'bfWeight', 'bfMuscle', 'bfFatPct', 'bfFatMass', 'bfVisceral', 'bfBmr'].forEach(function (id) {
+    $('#' + id).addEventListener('input', function () {
+      if (id === 'bfFatPct') syncFat('pct');
+      else if (id === 'bfFatMass') syncFat('mass');
+      else if (id === 'bfWeight') syncFat('weight');
+      renderBodyPreview();
+    });
+  });
+  $('#bodyForm').addEventListener('submit', saveBody);
+
   // 운동 추가 폼
   $('#cfSets').addEventListener('click', function (e) {
     var b = e.target.closest('[data-sets]');
@@ -2146,7 +2654,7 @@ form.sheet-body > .sheet-actions{
     e.target.value = '';
   });
   $('#wipeBtn').addEventListener('click', function () {
-    askConfirm('전체 기록을 지울까요?', '운동 체크, 메모, 통증 기록이 모두 삭제됩니다. 되돌릴 수 없어요.', '모두 삭제', function () {
+    askConfirm('전체 기록을 지울까요?', '운동 체크, 메모, 통증 기록, 신체·인바디 기록이 모두 삭제됩니다. 되돌릴 수 없어요.', '모두 삭제', function () {
       store = defaults();
       try { localStorage.removeItem(KEY); } catch (e) { }
       save();
@@ -2154,9 +2662,11 @@ form.sheet-body > .sheet-actions{
       stripStart = mondayOf(parseISO(TODAY));
       pDate = TODAY;
       pMonth = new Date(parseISO(TODAY).getFullYear(), parseISO(TODAY).getMonth(), 1);
+      bodySelIdx = -1;
       applyTheme();
       renderWorkout();
       renderPain();
+      renderBody();
       toast('전체 기록을 지웠어요');
     });
   });
@@ -2202,6 +2712,7 @@ form.sheet-body > .sheet-actions{
   applyTheme();
   renderWorkout();
   renderPain();
+  renderBody();
   updateDock();
   if ('serviceWorker' in navigator && window.__WL_SW === true) {
     var hadController = !!navigator.serviceWorker.controller;
