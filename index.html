@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f2f5f8">
-<meta name="description" content="운동 일지 — 1주차 주간 운동 계획, 세트 체크, 60초·75초 휴식 타이머, 통증 일지">
+<meta name="description" content="운동 일지 — 1주차 주간 운동 계획, 세트 체크, 휴식·동작 타이머, 통증 일지">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -197,6 +197,14 @@ h1,h2,h3{letter-spacing:-.03em}
 }
 .restbtn svg{width:11px;height:11px}
 .restbtn:active{transform:scale(.95)}
+.timebtn{
+  display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;letter-spacing:0;
+  padding:4px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent2);
+  border:1px solid var(--accent-line);white-space:nowrap;transition:background .15s,color .15s;
+}
+.timebtn svg{width:11px;height:11px}
+.timebtn:active{transform:scale(.95)}
+.timebtn.on{background:var(--accent);color:#fff;border-color:transparent}
 .tip{font-size:12.5px;color:var(--txt2);margin-top:9px;padding-left:9px;border-left:2px solid var(--accent-line);line-height:1.45}
 .sets{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap}
 .setbtn{
@@ -238,6 +246,19 @@ h1,h2,h3{letter-spacing:-.03em}
 .check.done .box{background:var(--accent);border-color:var(--accent)}
 .check.done .box svg{opacity:1;transform:none}
 .check.done h3{color:var(--accent2)}
+
+/* ---------- check row with a duration timer (stretching) ---------- */
+.check-row{
+  display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:8px 12px;margin-bottom:8px;box-shadow:var(--shadow-sm);
+  transition:background .15s,border-color .15s;
+}
+.check-row .check{
+  flex:1;min-width:0;width:auto;margin:0;padding:0;min-height:50px;
+  border:0;border-radius:0;background:transparent;box-shadow:none;
+}
+.check-row .check.done{background:transparent}
+.check-row.done{background:var(--accent-soft);border-color:var(--accent-line)}
 
 /* ---------- note card ---------- */
 .note-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow-sm)}
@@ -283,6 +304,11 @@ h1,h2,h3{letter-spacing:-.03em}
 }
 .dock.running .dock-in{border-color:var(--accent-line);background:linear-gradient(140deg,var(--accent-soft),var(--card) 70%)}
 .dock.running.finished .dock-in{border-color:var(--p4);background:linear-gradient(140deg,#fff3e8,var(--card) 70%)}
+.dock.running.move .dock-time{color:var(--blue)}
+.dock.running.move .dock-bar i{background:var(--blue)}
+.dock.running.move .dock-in{border-color:#c7d8ff;background:linear-gradient(140deg,var(--blue-soft),var(--card) 70%)}
+.dock.running.move .cbtn{background:var(--blue);box-shadow:0 4px 12px rgba(47,111,237,.3)}
+.dock.running.move.finished .dock-in{border-color:var(--p4);background:linear-gradient(140deg,#fff3e8,var(--card) 70%)}
 .dock-time{
   font-family:var(--mono);font-size:18px;font-weight:800;letter-spacing:-.02em;
   font-variant-numeric:tabular-nums;min-width:52px;text-align:center;color:var(--txt);
@@ -308,6 +334,24 @@ h1,h2,h3{letter-spacing:-.03em}
 .cbtn:active{transform:scale(.94)}
 .dock .only-run{display:none}
 .dock.running .only-run{display:grid}
+.dock.running .only-idle{display:none}
+
+/* ---------- timer preset sheet ---------- */
+.tp-group{margin-bottom:15px}
+.tp-lb{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--txt2);margin-bottom:8px;letter-spacing:0}
+.tp-lb i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.tp-lb i.rest{background:var(--accent)}
+.tp-lb i.move{background:var(--blue)}
+.tp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.tp-btn{
+  min-height:46px;border-radius:12px;border:1.5px solid var(--line);background:var(--card2);
+  font-size:13.5px;font-weight:800;color:var(--txt2);transition:transform .12s,background .15s;
+}
+.tp-btn:active{transform:scale(.96)}
+.tp-btn.on{color:var(--accent-ink);border-color:transparent}
+.tp-btn[data-mode="rest"].on{background:var(--accent)}
+.tp-btn[data-mode="move"].on{background:var(--blue)}
+.tp-hint{font-size:11.5px;color:var(--muted);line-height:1.55;padding:2px 0 10px}
 
 /* ---------- tab bar ---------- */
 .tabbar{
@@ -592,8 +636,9 @@ form.sheet-body > .sheet-actions{
       <div class="dock-bar"><i id="dockBar"></i></div>
     </div>
     <div class="dock-btns">
-      <button class="pbtn" data-preset="60">60초</button>
-      <button class="pbtn" data-preset="75">75초</button>
+      <button class="pbtn" data-preset="60" aria-label="휴식 60초 타이머 시작">60초</button>
+      <button class="pbtn" data-preset="75" aria-label="휴식 75초 타이머 시작">75초</button>
+      <button class="pbtn only-idle" id="tMore" aria-label="동작·스트레칭 타이머 시간 고르기">동작</button>
       <button class="cbtn ghost only-run" id="tReset" aria-label="타이머 리셋">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
       </button>
@@ -601,6 +646,43 @@ form.sheet-body > .sheet-actions{
         <svg id="tPlayIcon" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.4"/><rect x="13.5" y="5" width="4" height="14" rx="1.4"/></svg>
       </button>
     </div>
+  </div>
+</div>
+
+<!-- ================= 타이머 시작 (휴식 · 동작) ================= -->
+<div class="sheet" id="timerSheet" role="dialog" aria-modal="true" aria-label="타이머 시작">
+  <div class="grab"></div>
+  <div class="sheet-head">
+    <div><h2>타이머 시작</h2><p>휴식은 60·75초, 동작·스트레칭은 시간을 골라 바로</p></div>
+    <button class="close" data-close="timerSheet" aria-label="닫기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <div class="sheet-body">
+    <div class="tp-group">
+      <div class="tp-lb"><i class="rest"></i>휴식</div>
+      <div class="tp-grid">
+        <button type="button" class="tp-btn" data-mode="rest" data-start="60">60초</button>
+        <button type="button" class="tp-btn" data-mode="rest" data-start="75">75초</button>
+      </div>
+    </div>
+    <div class="tp-group">
+      <div class="tp-lb"><i class="move"></i>동작 · 스트레칭</div>
+      <div class="tp-grid">
+        <button type="button" class="tp-btn" data-mode="move" data-start="20">20초</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="30">30초</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="40">40초</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="45">45초</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="60">1분</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="120">2분</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="180">3분</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="300">5분</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="600">10분</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="900">15분</button>
+        <button type="button" class="tp-btn" data-mode="move" data-start="1200">20분</button>
+      </div>
+    </div>
+    <p class="tp-hint">운동 카드의 ⏱ 버튼을 누르면 그 동작에 적힌 시간으로 바로 시작돼요. 스트레칭처럼 좌우로 할 때는 한쪽이 끝나면 다시 누르면 됩니다.</p>
   </div>
 </div>
 
@@ -799,8 +881,8 @@ form.sheet-body > .sheet-actions{
       <button class="tiny danger" id="wipeBtn">삭제</button>
     </div>
     <p style="font-size:11.5px;color:var(--muted);line-height:1.6;padding:12px 0 6px">
-      운동 일지 v1.0 · 홈 화면에 추가하면 앱처럼 열 수 있어요.<br>
-      휴식 타이머는 화면을 켜 둔 상태에서 동작합니다.
+      운동 일지 v1.1 · 홈 화면에 추가하면 앱처럼 열 수 있어요.<br>
+      타이머(휴식·동작)는 화면을 켜 둔 상태에서 동작합니다.
     </p>
   </div>
 </div>
@@ -844,6 +926,23 @@ form.sheet-body > .sheet-actions{
   var mmss = function (sec) {
     sec = Math.max(0, Math.ceil(sec));
     return pad(Math.floor(sec / 60)) + ':' + pad(sec % 60);
+  };
+  /* 동작 시간 파싱 : '30초', '좌우 30초 × 2회', '12분', '좌우 20~30초' … */
+  var durOf = function (text) {
+    var s = String(text == null ? '' : text);
+    var mi = s.match(/(\d+)\s*분/);
+    if (mi) return Number(mi[1]) * 60;
+    var rg = s.match(/(\d+)\s*(?:~|∼|-|～|에서)\s*(\d+)\s*초/);
+    if (rg) return Number(rg[2]);
+    var se = s.match(/(\d+)\s*초/);
+    if (se) return Number(se[1]);
+    return 0;
+  };
+  var durLabel = function (sec) {
+    sec = Math.max(0, Math.round(sec));
+    if (sec < 60) return sec + '초';
+    var m = Math.floor(sec / 60), r = sec % 60;
+    return r ? m + '분 ' + r + '초' : m + '분';
   };
   var mondayOf = function (d) {
     var x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -1103,8 +1202,8 @@ form.sheet-body > .sheet-actions{
       : '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>';
   }
 
-  /* ================= 휴식 타이머 ================= */
-  var timer = { total: 60, remain: 0, endAt: 0, running: false, started: false, finished: false, iv: null };
+  /* ================= 휴식 · 동작 타이머 ================= */
+  var timer = { total: 60, remain: 0, endAt: 0, running: false, started: false, finished: false, iv: null, mode: 'rest', label: '' };
   var actx = null;
   function ensureAudio() {
     try {
@@ -1138,7 +1237,9 @@ form.sheet-body > .sheet-actions{
   function vibrate(pattern) {
     try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) { }
   }
-  function timerStart(sec) {
+  function timerStart(sec, opts) {
+    sec = Math.max(1, Math.round(Number(sec) || 0));
+    opts = opts || {};
     ensureAudio();
     timer.total = sec;
     timer.remain = sec;
@@ -1146,6 +1247,8 @@ form.sheet-body > .sheet-actions{
     timer.running = true;
     timer.started = true;
     timer.finished = false;
+    timer.mode = opts.mode === 'move' ? 'move' : 'rest';
+    timer.label = timer.mode === 'move' ? String(opts.label || '') : '';
     startTicking();
     updateDock();
   }
@@ -1169,6 +1272,8 @@ form.sheet-body > .sheet-actions{
     timer.started = false;
     timer.finished = false;
     timer.remain = 0;
+    timer.mode = 'rest';
+    timer.label = '';
     stopTicking();
     updateDock();
   }
@@ -1189,7 +1294,9 @@ form.sheet-body > .sheet-actions{
     updateDock();
     beep();
     vibrate([180, 70, 180, 70, 260]);
-    toast('휴식 끝! 다음 세트 가볼까요?');
+    toast(timer.mode === 'move'
+      ? (timer.label ? timer.label + ' 끝!' : '동작 시간 끝!')
+      : '휴식 끝! 다음 세트 가볼까요?');
     setTimeout(function () {
       if (timer.finished) { timer.finished = false; timer.started = false; updateDock(); }
     }, 9000);
@@ -1201,18 +1308,29 @@ form.sheet-body > .sheet-actions{
   }
   function updateDock() {
     var d = $('#dock');
+    var move = timer.mode === 'move';
     d.classList.toggle('running', timer.started);
+    d.classList.toggle('move', move);
     d.classList.toggle('finished', timer.finished);
     updateDockNumbers();
-    $('#dockLabel').textContent = timer.finished ? '휴식 끝! 다음 세트 준비'
-      : (timer.running ? '휴식 중 · ' + timer.total + '초'
-        : (timer.started ? '일시정지 · ' + timer.total + '초' : '휴식 타이머'));
+    var name = timer.label || '동작';
+    $('#dockLabel').textContent = timer.finished
+      ? (move ? name + ' 끝! 다음 동작 준비' : '휴식 끝! 다음 세트 준비')
+      : (timer.running ? (move ? name + ' · ' + durLabel(timer.total) : '휴식 중 · ' + timer.total + '초')
+        : (timer.started ? '일시정지 · ' + durLabel(timer.total) : '휴식 · 동작 타이머'));
     $('#tPlayIcon').innerHTML = timer.running
       ? '<rect x="6.5" y="5" width="4" height="14" rx="1.4"/><rect x="13.5" y="5" width="4" height="14" rx="1.4"/>'
       : '<path d="M8 5.2v13.6L19 12Z"/>';
     $('#tPlay').setAttribute('aria-label', timer.running ? '일시정지' : '계속');
     $$('#dock [data-preset]').forEach(function (b) {
-      b.classList.toggle('active', timer.started && !timer.finished && Number(b.dataset.preset) === timer.total);
+      b.classList.toggle('active', !move && timer.started && !timer.finished && Number(b.dataset.preset) === timer.total);
+    });
+    $$('#timerSheet .tp-btn').forEach(function (b) {
+      var m = b.dataset.mode === 'move' ? 'move' : 'rest';
+      b.classList.toggle('on', timer.started && !timer.finished && m === timer.mode && Number(b.dataset.start) === timer.total);
+    });
+    $$('[data-time-start]').forEach(function (b) {
+      b.classList.toggle('on', move && timer.started && !timer.finished && Number(b.dataset.timeStart) === timer.total);
     });
   }
 
@@ -1305,13 +1423,26 @@ form.sheet-body > .sheet-actions{
   function icClock() {
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
   }
+  function icTimer() {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.2" r="7.8"/><path d="M12 9.8v3.4l2.4 1.5M9 2.6h6"/></svg>';
+  }
+  function timeChip(sec, label) {
+    if (!sec) return '';
+    return '<button type="button" class="timebtn" data-time-start="' + sec + '"' +
+      (label ? ' data-time-label="' + esc(label) + '"' : '') +
+      ' aria-label="' + esc((label ? label + ' ' : '') + durLabel(sec) + ' 타이머 시작') + '">' +
+      icTimer() + durLabel(sec) + '</button>';
+  }
 
   function checkHTML(date, item) {
     var on = getState(date, item.id, 1).sets[0];
-    return '<button class="check' + (on ? ' done' : '') + '" data-check="' + item.id + '" aria-pressed="' + on + '">' +
+    var chk = '<button class="check' + (on ? ' done' : '') + '" data-check="' + item.id + '" aria-pressed="' + on + '">' +
       '<span class="box">' + icCheck() + '</span>' +
       '<span class="cbody"><h3>' + esc(item.name) + '</h3>' + (item.sub ? '<p>' + esc(item.sub) + '</p>' : '') + '</span>' +
       '</button>';
+    var chip = timeChip(durOf(item.sub), item.name);
+    if (!chip) return chk;
+    return '<div class="check-row' + (on ? ' done' : '') + '">' + chk + chip + '</div>';
   }
 
   function exHTML(date, item) {
@@ -1326,8 +1457,9 @@ form.sheet-body > .sheet-actions{
     var rest = item.rest > 0
       ? '<button class="restbtn" data-rest-start="' + item.rest + '" aria-label="휴식 ' + item.rest + '초 타이머 시작">' + icClock() + '휴식 ' + item.rest + '초</button>'
       : '';
+    var tchip = timeChip(durOf(item.sub), item.name);
     return '<article class="ex' + (full ? ' done' : '') + '" data-card="' + item.id + '">' +
-      '<div class="ex-head"><div><h3>' + esc(item.name) + ' ' + rest + '</h3>' +
+      '<div class="ex-head"><div><h3>' + esc(item.name) + ' ' + tchip + rest + '</h3>' +
       '<p class="ex-sub">' + esc(item.sub) + '</p></div>' +
       '<div class="ex-count' + (full ? ' full' : '') + '" data-count>' + n + '/' + item.sets + '</div></div>' +
       (item.tip ? '<p class="tip">' + esc(item.tip) + '</p>' : '') +
@@ -1379,6 +1511,7 @@ form.sheet-body > .sheet-actions{
       html += '<button class="btn block" data-add-custom style="margin-bottom:16px">＋ 이 날 운동 추가</button>';
     }
     $('#planWrap').innerHTML = html;
+    updateDock();
   }
 
   function renderWorkout() {
@@ -1750,6 +1883,14 @@ form.sheet-body > .sheet-actions{
 
   // 운동 체크
   $('#planWrap').addEventListener('click', function (e) {
+    var tbtn = e.target.closest('[data-time-start]');
+    if (tbtn) {
+      var tSec = Number(tbtn.dataset.timeStart);
+      var tLbl = tbtn.dataset.timeLabel || '';
+      timerStart(tSec, { mode: 'move', label: tLbl });
+      toast((tLbl ? tLbl + ' ' : '') + durLabel(tSec) + ' 타이머 시작');
+      return;
+    }
     var chk = e.target.closest('[data-check]');
     if (chk) {
       var id = chk.dataset.check;
@@ -1757,6 +1898,8 @@ form.sheet-body > .sheet-actions{
       putState(selDate, id, { sets: [!st.sets[0]], done: !st.sets[0] });
       chk.classList.toggle('done', !st.sets[0]);
       chk.setAttribute('aria-pressed', String(!st.sets[0]));
+      var row = chk.closest('.check-row');
+      if (row) row.classList.toggle('done', !st.sets[0]);
       refreshProgress();
       return;
     }
@@ -1850,14 +1993,27 @@ form.sheet-body > .sheet-actions{
     renderStrip();
   });
 
-  // 휴식 타이머 조작
+  // 휴식 · 동작 타이머 조작
   $$('#dock [data-preset]').forEach(function (b) {
-    b.addEventListener('click', function () { timerStart(Number(b.dataset.preset)); });
+    b.addEventListener('click', function () { timerStart(Number(b.dataset.preset), { mode: 'rest' }); });
+  });
+  $('#tMore').addEventListener('click', function () {
+    updateDock();
+    openSheet('timerSheet');
+  });
+  $$('#timerSheet .tp-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var mode = b.dataset.mode === 'move' ? 'move' : 'rest';
+      var sec = Number(b.dataset.start);
+      timerStart(sec, { mode: mode });
+      closeSheet('timerSheet');
+      toast((mode === 'move' ? '동작 타이머 ' : '휴식 타이머 ') + durLabel(sec) + ' 시작');
+    });
   });
   $('#tPlay').addEventListener('click', function () {
     if (timer.running) timerPause();
     else if (timer.remain > 0) timerResume();
-    else timerStart(timer.total || 60);
+    else timerStart(timer.total || 60, { mode: timer.mode });
   });
   $('#tReset').addEventListener('click', function () { timerReset(); toast('타이머를 초기화했어요'); });
 
@@ -2048,8 +2204,18 @@ form.sheet-body > .sheet-actions{
   renderPain();
   updateDock();
   if ('serviceWorker' in navigator && window.__WL_SW === true) {
+    var hadController = !!navigator.serviceWorker.controller;
+    var swReloaded = false;
+    // 새 버전이 이 페이지를 넘겨받으면 한 번만 새로고침해서 바로 반영
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadController || swReloaded) return;
+      swReloaded = true;
+      location.reload();
+    });
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').catch(function () { /* 오프라인 캐시는 없어도 앱은 동작 */ });
+      navigator.serviceWorker.register('sw.js').then(function (reg) {
+        if (reg && reg.update) reg.update();
+      }).catch(function () { /* 오프라인 캐시는 없어도 앱은 동작 */ });
     });
   }
   window.__WL = { store: function () { return store; }, selDate: function () { return selDate; } };
