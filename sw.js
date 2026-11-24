@@ -11,11 +11,16 @@ self.addEventListener('install', (e) => {
 });
 
 self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
-  );
+  e.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)));
+    await self.clients.claim();
+    // 새 버전이 활성화되면 열려 있던 화면도 새 버전으로 다시 열어 준다 (기기에 바로 반영)
+    const wins = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const w of wins) {
+      try { await w.navigate(w.url); } catch (_) { /* 열 수 없는 화면은 그대로 둔다 */ }
+    }
+  })());
 });
 
 self.addEventListener('fetch', (e) => {
@@ -24,10 +29,14 @@ self.addEventListener('fetch', (e) => {
   if (url.origin !== location.origin) return;
   // 페이지 이동 요청은 네트워크를 먼저 보고(새 버전 즉시 반영), 실패하면 캐시로
   if (e.request.mode === 'navigate') {
+    // 앱 셸(index.html)만 캐시에 갱신해 둔다
+    const isShell = /\/$|\/index\.html$/.test(url.pathname);
     e.respondWith(
       fetch(e.request, { cache: 'no-cache' }).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put('./index.html', copy)).catch(() => {});
+        if (isShell) {
+          const copy = res.clone();
+          caches.open(CACHE).then((c) => c.put('./index.html', copy)).catch(() => {});
+        }
         return res;
       }).catch(() => caches.match('./index.html', { ignoreSearch: true }))
     );
