@@ -910,36 +910,36 @@ form.sheet-body > .sheet-actions{
     <div class="two">
       <label class="fl">
         <span class="lb">키 <span class="hint">cm</span></span>
-        <input inputmode="decimal" id="bfHeight" placeholder="188" autocomplete="off">
+        <input type="text" inputmode="decimal" id="bfHeight" placeholder="188" autocomplete="off">
       </label>
       <label class="fl">
-        <span class="lb">몸무게 <span class="hint">kg · 필수</span></span>
-        <input inputmode="decimal" id="bfWeight" placeholder="예: 78.4" autocomplete="off">
+        <span class="lb">몸무게 <span class="hint">kg</span></span>
+        <input type="text" inputmode="decimal" id="bfWeight" placeholder="예: 78.4" autocomplete="off">
       </label>
     </div>
     <div class="two">
       <label class="fl">
         <span class="lb">골격근량 <span class="hint">kg</span></span>
-        <input inputmode="decimal" id="bfMuscle" placeholder="예: 34.2" autocomplete="off">
+        <input type="text" inputmode="decimal" id="bfMuscle" placeholder="예: 34.2" autocomplete="off">
       </label>
       <label class="fl">
         <span class="lb">내장지방 <span class="hint">레벨</span></span>
-        <input inputmode="numeric" id="bfVisceral" placeholder="예: 8" autocomplete="off">
+        <input type="text" inputmode="numeric" id="bfVisceral" placeholder="예: 8" autocomplete="off">
       </label>
     </div>
     <div class="two">
       <label class="fl">
         <span class="lb">체지방률 <span class="hint">%</span></span>
-        <input inputmode="decimal" id="bfFatPct" placeholder="예: 18.5" autocomplete="off">
+        <input type="text" inputmode="decimal" id="bfFatPct" placeholder="예: 18.5" autocomplete="off">
       </label>
       <label class="fl">
         <span class="lb">체지방량 <span class="hint">kg</span></span>
-        <input inputmode="decimal" id="bfFatMass" placeholder="자동 계산" autocomplete="off">
+        <input type="text" inputmode="decimal" id="bfFatMass" placeholder="자동 계산" autocomplete="off">
       </label>
     </div>
     <label class="fl">
       <span class="lb">기초대사량 <span class="hint">kcal · 비우면 추정치</span></span>
-      <input inputmode="numeric" id="bfBmr" placeholder="예: 1690" autocomplete="off">
+      <input type="text" inputmode="numeric" id="bfBmr" placeholder="예: 1690" autocomplete="off">
     </label>
     <div class="bprev" id="bfPreview"></div>
     <label class="fl">
@@ -2086,6 +2086,7 @@ form.sheet-body > .sheet-actions{
     var has = store.body.length > 0;
     $('#bodyChartCard').style.display = has ? '' : 'none';
     $('#bodyListHead').style.display = has ? '' : 'none';
+    $('#bodyList').style.display = has ? '' : 'none';
     renderBodySummary();
     renderBodyChart();
     renderBodyList();
